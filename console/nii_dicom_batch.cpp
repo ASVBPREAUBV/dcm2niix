@@ -1460,13 +1460,17 @@ tse3d: T2*/
     }
     fprintf(fp, "\t],\n");
     fprintf(fp, "\t\"gantryTiltOffset\": [\n");
-    //printMessage(" sizeof(d.gantTiltOffset) ===> %d\n", (int) sizeof(d.gantTiltOffset));
 
-    for (int i = 0; i < 1024; i++) {
+    // struct nifti_1_header hdr1 = *h;
 
-        if (opts.gantryTiltOffset[i] != 0 && i > 0) {
-            fprintf(fp, "\t\t%f,", opts.gantryTiltOffset[i]);
-        }
+    //struct nifti_1_header hdrIn = *hdr;
+
+    printMessage(" sizeof(d.gantTiltOffset) ===> %d\n", (int) h->dim[3]);
+
+    for (int i = 0; i < h->dim[3]; i++) {
+
+        fprintf(fp, "\t\t%f,", opts.gantryTiltOffset[i]);
+
     }
     //printMessage( d);
     fprintf(fp, "\t],\n");
