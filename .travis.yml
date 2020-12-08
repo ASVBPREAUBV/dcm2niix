@@ -27,15 +27,15 @@ before_install:
   - git submodule update --init --depth=3 dcm_qa_uih
 
 script:
-  - mkdir build && cd build && cmake -DBATCH_VERSION=ON -DUSE_OPENJPEG=ON -DUSE_JPEGLS=true -DZLIB_IMPLEMENTATION=Cloudflare .. && make && cd -
+  # - mkdir build && cd build && cmake -DBATCH_VERSION=ON -DUSE_OPENJPEG=ON -DUSE_JPEGLS=true -DZLIB_IMPLEMENTATION=Cloudflare .. && make && cd -
+  - mkdir build && cd build && cmake -DBATCH_VERSION=OFF -DUSE_OPENJPEG=ON -DUSE_JPEGLS=true -DZLIB_IMPLEMENTATION=Cloudflare .. && make && cd -
   - export PATH=$PWD/build/bin:$PATH
   - cd dcm_qa && ./batch.sh && cd -
   - cd dcm_qa_nih && ./batch.sh && cd -
   - cd dcm_qa_uih && ./batch.sh && cd -
 
 before_deploy:
-  - export DATE=`date +%-d-%b-%Y`
-  - zip -j dcm2niix_${DATE}_${TARGET}.zip build/bin/*
+  - zip -j dcm2niix_${TARGET}.zip build/bin/*
   - sleep 300 # make sure appveyor deployment is done, thus proper release name is set
 
 deploy:
